@@ -8,32 +8,911 @@
     <title>MKX ESPORTS | Free Fire Tournaments</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =====================================================
+           MKX ESPORTS — PREMIUM COLORFUL HOME
+           ===================================================== */
+
+        :root {
+            --yellow: #ffd21f;
+            --gold: #ffae00;
+            --purple: #8b5cf6;
+            --blue: #00c8ff;
+            --pink: #ff3cac;
+
+            --bg: #05050a;
+            --card: #10111b;
+
+            --white: #ffffff;
+            --text: #e5e7ef;
+            --muted: #b7bac8;
+        }
+
+
+        /* ================= GLOBAL ================= */
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(139, 92, 246, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(0, 200, 255, 0.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 50% 80%,
+                    rgba(255, 60, 172, 0.07),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color: var(--text);
+
+            overflow-x: hidden;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: rgba(5, 5, 10, 0.94) !important;
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(255, 210, 31, 0.18);
+
+            position: relative;
+            z-index: 50;
+        }
+
+
+        .logo {
+            color: var(--white) !important;
+
+            text-shadow:
+                0 0 12px rgba(255, 210, 31, 0.20);
+        }
+
+
+        nav a {
+            color: #eeeeF4 !important;
+
+            transition:
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+
+        nav a:hover {
+            color: var(--yellow) !important;
+
+            transform: translateY(-1px);
+
+            text-shadow:
+                0 0 12px rgba(255, 210, 31, 0.40);
+        }
+
+
+        .admin-btn {
+            border:
+                1px solid rgba(255, 210, 31, 0.40) !important;
+
+            color: var(--white) !important;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 88vh !important;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    rgba(3, 3, 8, 0.98) 0%,
+                    rgba(8, 7, 18, 0.96) 48%,
+                    rgba(18, 7, 25, 0.94) 100%
+                ) !important;
+        }
+
+
+        /* Purple glow */
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background: var(--purple);
+
+            filter: blur(140px);
+
+            opacity: 0.16;
+
+            right: -120px;
+            top: 50px;
+
+            pointer-events: none;
+        }
+
+
+        /* Blue glow */
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            background: var(--blue);
+
+            filter: blur(130px);
+
+            opacity: 0.10;
+
+            left: -100px;
+            bottom: -100px;
+
+            pointer-events: none;
+        }
+
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 850px;
+        }
+
+
+        .hero-small {
+            color: var(--yellow) !important;
+
+            font-weight: 800;
+
+            letter-spacing: 3px;
+
+            text-shadow:
+                0 0 12px rgba(255, 210, 31, 0.30);
+        }
+
+
+        .hero h1 {
+            font-size:
+                clamp(48px, 8vw, 92px) !important;
+
+            line-height:
+                0.94 !important;
+
+            margin:
+                18px 0 25px !important;
+
+            color:
+                var(--white) !important;
+
+            background:
+                none !important;
+
+            -webkit-background-clip:
+                initial !important;
+
+            background-clip:
+                initial !important;
+
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.10),
+                0 0 28px rgba(255,210,31,0.10) !important;
+        }
+
+
+        .hero-content > p:not(.hero-small) {
+            max-width: 650px;
+
+            color:
+                var(--text) !important;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            text-shadow:
+                0 2px 7px rgba(0,0,0,0.8);
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .hero-buttons {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 14px;
+
+            margin-top: 30px;
+        }
+
+
+        .btn {
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease !important;
+        }
+
+
+        .btn.primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--yellow),
+                    var(--gold)
+                ) !important;
+
+            color:
+                #080808 !important;
+
+            border:
+                none !important;
+
+            font-weight:
+                800;
+
+            box-shadow:
+                0 0 22px
+                rgba(255, 210, 31, 0.20);
+        }
+
+
+        .btn.primary:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 0 32px
+                rgba(255, 210, 31, 0.40);
+        }
+
+
+        .btn.secondary {
+            background:
+                rgba(139, 92, 246, 0.08) !important;
+
+            border:
+                1px solid
+                rgba(139, 92, 246, 0.65) !important;
+
+            color:
+                var(--white) !important;
+        }
+
+
+        .btn.secondary:hover {
+            transform:
+                translateY(-3px);
+
+            border-color:
+                var(--blue) !important;
+
+            background:
+                rgba(0, 200, 255, 0.08) !important;
+
+            box-shadow:
+                0 0 25px
+                rgba(0, 200, 255, 0.15);
+        }
+
+
+        /* ================= SECTION TITLES ================= */
+
+        .section-title p {
+            color:
+                var(--yellow) !important;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                2px;
+
+            text-shadow:
+                0 0 10px
+                rgba(255,210,31,0.22);
+        }
+
+
+        .section-title h2 {
+            color:
+                var(--white) !important;
+
+            text-shadow:
+                0 0 12px
+                rgba(255,255,255,0.08);
+        }
+
+
+        /* ================= TOURNAMENT ================= */
+
+        .tournament-card {
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(17,18,29,0.97),
+                    rgba(10,10,18,0.97)
+                ) !important;
+
+            border:
+                1px solid
+                rgba(139,92,246,0.34) !important;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.35);
+        }
+
+
+        .tournament-card::before {
+            content: "";
+
+            position:
+                absolute;
+
+            width:
+                260px;
+
+            height:
+                260px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--purple);
+
+            filter:
+                blur(120px);
+
+            opacity:
+                0.10;
+
+            right:
+                -100px;
+
+            top:
+                -100px;
+        }
+
+
+        .tournament-card::after {
+            content: "";
+
+            position:
+                absolute;
+
+            width:
+                190px;
+
+            height:
+                190px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--blue);
+
+            filter:
+                blur(100px);
+
+            opacity:
+                0.07;
+
+            left:
+                -80px;
+
+            bottom:
+                -80px;
+        }
+
+
+        .tournament-top,
+        .tournament-info,
+        .tournament-actions {
+            position:
+                relative;
+
+            z-index:
+                2;
+        }
+
+
+        .badge {
+            background:
+                rgba(255,210,31,0.10) !important;
+
+            border:
+                1px solid
+                rgba(255,210,31,0.40);
+
+            color:
+                var(--yellow) !important;
+
+            box-shadow:
+                0 0 15px
+                rgba(255,210,31,0.08);
+        }
+
+
+        .tournament-top h3 {
+            color:
+                var(--white) !important;
+
+            text-shadow:
+                0 0 10px
+                rgba(255,255,255,0.08);
+        }
+
+
+        .tournament-top p {
+            color:
+                var(--muted) !important;
+        }
+
+
+        /* Tournament information */
+
+        .tournament-info {
+            display:
+                grid !important;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                12px;
+        }
+
+
+        .tournament-info > div {
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius:
+                14px;
+
+            padding:
+                18px 14px;
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .tournament-info > div:hover {
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(0,200,255,0.35);
+
+            box-shadow:
+                0 0 22px
+                rgba(0,200,255,0.08);
+        }
+
+
+        .tournament-info strong {
+            display:
+                block;
+
+            color:
+                #aeb1bf;
+
+            font-size:
+                12px;
+
+            letter-spacing:
+                1px;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .tournament-info span {
+            color:
+                var(--white);
+
+            font-weight:
+                800;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            gap:
+                20px !important;
+        }
+
+
+        .feature-card {
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            background:
+                rgba(14,15,25,0.90) !important;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08) !important;
+
+            transition:
+                0.30s ease;
+        }
+
+
+        .feature-card:nth-child(1) {
+            border-top:
+                2px solid
+                var(--yellow) !important;
+        }
+
+
+        .feature-card:nth-child(2) {
+            border-top:
+                2px solid
+                var(--purple) !important;
+        }
+
+
+        .feature-card:nth-child(3) {
+            border-top:
+                2px solid
+                var(--blue) !important;
+        }
+
+
+        .feature-card:hover {
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                0 18px 45px
+                rgba(0,0,0,0.35);
+        }
+
+
+        .feature-icon {
+            font-size:
+                34px !important;
+
+            margin-bottom:
+                15px;
+        }
+
+
+        .feature-card h3 {
+            color:
+                var(--white) !important;
+        }
+
+
+        .feature-card p {
+            color:
+                var(--muted) !important;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* ================= RULES ================= */
+
+        .rules-box {
+            background:
+                rgba(12,12,21,0.90) !important;
+
+            border:
+                1px solid
+                rgba(255,210,31,0.16) !important;
+
+            box-shadow:
+                0 15px 50px
+                rgba(0,0,0,0.22);
+        }
+
+
+        .rule {
+            border-color:
+                rgba(255,255,255,0.08) !important;
+        }
+
+
+        .rule span {
+            color:
+                var(--yellow) !important;
+
+            text-shadow:
+                0 0 10px
+                rgba(255,210,31,0.25);
+        }
+
+
+        .rule p {
+            color:
+                var(--text) !important;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(139,92,246,0.14),
+                    rgba(0,200,255,0.07)
+                ) !important;
+
+            border:
+                1px solid
+                rgba(139,92,246,0.28) !important;
+
+            box-shadow:
+                0 0 40px
+                rgba(139,92,246,0.06);
+        }
+
+
+        .status-box h2 {
+            color:
+                var(--white) !important;
+        }
+
+
+        .status-box span {
+            color:
+                var(--muted) !important;
+        }
+
+
+        /* ================= REGISTER CTA ================= */
+
+        .register-box {
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,210,31,0.10),
+                    rgba(139,92,246,0.12),
+                    rgba(0,200,255,0.07)
+                ) !important;
+
+            border:
+                1px solid
+                rgba(255,210,31,0.22) !important;
+        }
+
+
+        .register-box h2 {
+            color:
+                var(--white) !important;
+        }
+
+
+        .register-box p {
+            color:
+                var(--text) !important;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background:
+                #030308 !important;
+
+            border-top:
+                1px solid
+                rgba(139,92,246,0.20);
+        }
+
+
+        .footer-brand h2 {
+            color:
+                var(--white) !important;
+        }
+
+
+        .footer-brand p {
+            color:
+                var(--muted) !important;
+        }
+
+
+        .footer-brand span {
+            color:
+                var(--yellow) !important;
+        }
+
+
+        .footer-links h3 {
+            color:
+                var(--white) !important;
+        }
+
+
+        .footer-links a {
+            color:
+                var(--muted) !important;
+        }
+
+
+        .footer-links a:hover {
+            color:
+                var(--yellow) !important;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            .hero {
+                min-height:
+                    78vh !important;
+            }
+
+
+            .hero h1 {
+                font-size:
+                    clamp(42px, 12vw, 68px) !important;
+            }
+
+
+            .hero-content > p:not(.hero-small) {
+                font-size:
+                    16px;
+            }
+
+
+            .tournament-info {
+                grid-template-columns:
+                    repeat(2, 1fr) !important;
+            }
+
+
+            .hero-buttons {
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+            }
+
+
+            .hero-buttons .btn {
+                text-align:
+                    center;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .tournament-info {
+                grid-template-columns:
+                    1fr !important;
+            }
+
+
+            .hero-small {
+                font-size:
+                    12px;
+
+                letter-spacing:
+                    2px;
+            }
+
+
+            .hero h1 {
+                font-size:
+                    43px !important;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
     <!-- ================= HEADER ================= -->
+
     <header>
 
         <div class="logo">
             ⚡ MKX ESPORTS
         </div>
 
+
         <nav>
-            <a href="index.html">Home</a>
-            <a href="tournament.html">Tournaments</a>
-            <a href="index.html#rules">Rules</a>
-            <a href="track.html">Track Status</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="tournament.html">
+                Tournaments
+            </a>
+
+            <a href="index.html#rules">
+                Rules
+            </a>
+
+            <a href="track.html">
+                Track Status
+            </a>
 
             <a href="admin.html" class="admin-btn">
                 🔐 Admin
             </a>
+
         </nav>
 
     </header>
 
 
+
     <!-- ================= HERO ================= -->
+
     <section id="home" class="hero">
 
         <div class="hero-content">
@@ -42,21 +921,26 @@
                 ⚡ MKX ESPORTS PRESENTS
             </p>
 
+
             <h1>
                 PLAY TO LEAVE<br>
                 A LEGACY.
             </h1>
 
+
             <p>
                 Competitive Free Fire tournaments built
-                for serious squads.
+                for players who are ready to compete,
+                dominate and make their mark.
             </p>
+
 
             <div class="hero-buttons">
 
                 <a href="tournament.html" class="btn primary">
                     Find a Tournament →
                 </a>
+
 
                 <a href="track.html" class="btn secondary">
                     Track Registration
@@ -69,18 +953,24 @@
     </section>
 
 
+
     <!-- ================= TOURNAMENT ================= -->
+
     <section id="tournaments" class="section">
 
         <div class="section-title">
 
-            <p>UPCOMING TOURNAMENT</p>
+            <p>
+                🔥 UPCOMING TOURNAMENT
+            </p>
+
 
             <h2>
                 GT TOURNAMENT — SEASON 01
             </h2>
 
         </div>
+
 
 
         <div class="tournament-card">
@@ -93,12 +983,14 @@
                         🔥 LIVE REGISTRATION
                     </span>
 
+
                     <h3>
                         GT TOURNAMENT
                     </h3>
 
+
                     <p>
-                        Season 01
+                        Season 01 • Solo Championship
                     </p>
 
                 </div>
@@ -106,29 +998,64 @@
             </div>
 
 
+
             <div class="tournament-info">
 
-                <div>
-                    <strong>🎮 GAME</strong>
-                    <span>Free Fire</span>
-                </div>
 
                 <div>
-                    <strong>🏆 MODE</strong>
-                    <span>BR Squad</span>
+
+                    <strong>
+                        🎮 GAME
+                    </strong>
+
+                    <span>
+                        Free Fire
+                    </span>
+
                 </div>
 
-                <div>
-                    <strong>👥 TEAM</strong>
-                    <span>4 Players</span>
-                </div>
 
                 <div>
-                    <strong>🎯 SLOTS</strong>
-                    <span>12 Squads</span>
+
+                    <strong>
+                        🏆 MODE
+                    </strong>
+
+                    <span>
+                        Solo
+                    </span>
+
                 </div>
+
+
+                <div>
+
+                    <strong>
+                        👤 PLAYERS
+                    </strong>
+
+                    <span>
+                        1 Player
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        🎯 SEATS
+                    </strong>
+
+                    <span>
+                        48 Available
+                    </span>
+
+                </div>
+
 
             </div>
+
 
 
             <div class="tournament-actions">
@@ -137,8 +1064,9 @@
                     View Details
                 </a>
 
+
                 <a href="register.html" class="btn primary">
-                    Register Your Team →
+                    Register Now →
                 </a>
 
             </div>
@@ -148,12 +1076,17 @@
     </section>
 
 
+
     <!-- ================= WHY MKX ================= -->
+
     <section class="section">
 
         <div class="section-title">
 
-            <p>WHY MKX ESPORTS</p>
+            <p>
+                ⚡ WHY MKX ESPORTS
+            </p>
+
 
             <h2>
                 BUILT FOR COMPETITIVE PLAY
@@ -162,7 +1095,9 @@
         </div>
 
 
+
         <div class="features">
+
 
             <div class="feature-card">
 
@@ -170,16 +1105,20 @@
                     🏆
                 </div>
 
+
                 <h3>
                     Competitive Tournaments
                 </h3>
 
+
                 <p>
-                    Structured tournaments for
-                    serious Free Fire squads.
+                    Organized Free Fire tournaments
+                    built for players who want real
+                    competitive experience.
                 </p>
 
             </div>
+
 
 
             <div class="feature-card">
@@ -188,16 +1127,19 @@
                     ⚡
                 </div>
 
+
                 <h3>
                     Fast Registration
                 </h3>
 
+
                 <p>
-                    Register your squad quickly
-                    and track your registration.
+                    Register your player details quickly
+                    and track your registration anytime.
                 </p>
 
             </div>
+
 
 
             <div class="feature-card">
@@ -206,28 +1148,36 @@
                     🎯
                 </div>
 
+
                 <h3>
                     Fair Competition
                 </h3>
 
+
                 <p>
-                    Clear rules and organized
-                    tournament management.
+                    Clear rules, organized management
+                    and a fair competitive environment.
                 </p>
 
             </div>
+
 
         </div>
 
     </section>
 
 
+
     <!-- ================= RULES ================= -->
+
     <section id="rules" class="section rules-section">
 
         <div class="section-title">
 
-            <p>TOURNAMENT RULES</p>
+            <p>
+                🛡️ TOURNAMENT RULES
+            </p>
+
 
             <h2>
                 PLAY FAIR. PLAY HARD.
@@ -236,11 +1186,16 @@
         </div>
 
 
+
         <div class="rules-box">
+
 
             <div class="rule">
 
-                <span>01</span>
+                <span>
+                    01
+                </span>
+
 
                 <p>
                     Only registered players and
@@ -250,9 +1205,13 @@
             </div>
 
 
+
             <div class="rule">
 
-                <span>02</span>
+                <span>
+                    02
+                </span>
+
 
                 <p>
                     Hacks, scripts, cheats and
@@ -262,9 +1221,13 @@
             </div>
 
 
+
             <div class="rule">
 
-                <span>03</span>
+                <span>
+                    03
+                </span>
+
 
                 <p>
                     Respect all players and avoid
@@ -274,9 +1237,13 @@
             </div>
 
 
+
             <div class="rule">
 
-                <span>04</span>
+                <span>
+                    04
+                </span>
+
 
                 <p>
                     Tournament Admin Team has the
@@ -285,15 +1252,19 @@
 
             </div>
 
+
         </div>
 
     </section>
 
 
+
     <!-- ================= STATUS ================= -->
+
     <section id="status" class="section status-section">
 
         <div class="status-box">
+
 
             <div>
 
@@ -301,9 +1272,11 @@
                     ALREADY REGISTERED?
                 </p>
 
+
                 <h2>
-                    TRACK YOUR TEAM
+                    TRACK YOUR REGISTRATION
                 </h2>
+
 
                 <span>
                     Check your registration status
@@ -313,46 +1286,58 @@
             </div>
 
 
+
             <a href="track.html" class="btn primary">
                 Track Status →
             </a>
+
 
         </div>
 
     </section>
 
 
+
     <!-- ================= REGISTER ================= -->
+
     <section class="section register-section">
 
         <div class="register-box">
+
 
             <p>
                 READY TO COMPETE?
             </p>
 
+
             <h2>
-                REGISTER YOUR SQUAD
+                ENTER THE BATTLE.
             </h2>
 
+
             <p>
-                Build your squad. Enter the battlefield.
-                Leave a legacy.
+                One player. One registration.
+                One chance to leave a legacy.
             </p>
 
+
             <a href="register.html" class="btn primary">
-                Register Your Team →
+                Register Now →
             </a>
+
 
         </div>
 
     </section>
 
 
+
     <!-- ================= FOOTER ================= -->
+
     <footer>
 
         <div class="footer-main">
+
 
             <div class="footer-brand">
 
@@ -360,9 +1345,11 @@
                     ⚡ MKX ESPORTS
                 </h2>
 
+
                 <p>
                     TWO MINDS × ONE VISION.
                 </p>
+
 
                 <span>
                     PLAY TO LEAVE A LEGACY.
@@ -371,31 +1358,38 @@
             </div>
 
 
+
             <div class="footer-links">
 
                 <h3>
                     QUICK LINKS
                 </h3>
 
+
                 <a href="index.html">
                     Home
                 </a>
+
 
                 <a href="tournament.html">
                     Tournaments
                 </a>
 
+
                 <a href="register.html">
                     Register
                 </a>
+
 
                 <a href="track.html">
                     Track Status
                 </a>
 
+
                 <a href="index.html#rules">
                     Rules
                 </a>
+
 
                 <a href="admin.html" class="footer-admin">
                     🔐 Admin Login
@@ -403,9 +1397,11 @@
 
             </div>
 
+
         </div>
 
     </footer>
+
 
 </body>
 

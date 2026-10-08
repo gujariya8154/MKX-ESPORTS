@@ -4,228 +4,342 @@ const db = require("./database");
 
 const app = express();
 
-// Hosting par PORT automatically male, local ma 3000 use thase
+/* =====================================================
+   SERVER
+===================================================== */
+
 const PORT = process.env.PORT || 3000;
 
-// =========================
-// ADMIN LOGIN DETAILS
-// =========================
 
-// IMPORTANT:
-// Aa credentials public GitHub ma mukva nahi.
-// Proper deployment pela environment variables use karishu.
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
+
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-// =========================
-// MIDDLEWARE
-// =========================
+
+/* =====================================================
+   TOURNAMENT SETTINGS
+===================================================== */
+
+const TOURNAMENT_ID = "GT-S01";
+const MAX_SEATS = 48;
+
+
+/* =====================================================
+   MIDDLEWARE
+===================================================== */
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-// =========================
-// HOME
-// =========================
+
+/* =====================================================
+   HOME
+===================================================== */
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+
+    res.sendFile(
+        __dirname + "/public/index.html"
+    );
+
 });
 
-// =========================
-// TEAM REGISTRATION
-// =========================
+
+/* =====================================================
+   REGISTER SOLO PLAYER
+===================================================== */
 
 app.post("/register", (req, res) => {
 
     try {
 
         const {
-            teamName,
-            captainName,
-            captainMobile,
-            captainEmail,
-
-            player1Name,
-            player1Ign,
-            player1Uid,
-
-            player2Name,
-            player2Ign,
-            player2Uid,
-
-            player3Name,
-            player3Ign,
-            player3Uid,
-
-            player4Name,
-            player4Ign,
-            player4Uid
+            playerName,
+            playerIgn,
+            playerUid,
+            mobile,
+            email
         } = req.body;
 
 
-        // =========================
-        // REQUIRED FIELD VALIDATION
-        // =========================
+        /* =============================================
+           CLEAN INPUT
+        ============================================= */
+
+        const cleanPlayerName =
+            String(playerName || "").trim();
+
+        const cleanPlayerIgn =
+            String(playerIgn || "").trim();
+
+        const cleanPlayerUid =
+            String(playerUid || "").trim();
+
+        const cleanMobile =
+            String(mobile || "").trim();
+
+        const cleanEmail =
+            String(email || "").trim();
+
+
+        /* =============================================
+           REQUIRED FIELDS
+        ============================================= */
 
         if (
-            !teamName ||
-            !captainName ||
-            !captainMobile ||
-
-            !player1Name ||
-            !player1Ign ||
-            !player1Uid ||
-
-            !player2Name ||
-            !player2Ign ||
-            !player2Uid ||
-
-            !player3Name ||
-            !player3Ign ||
-            !player3Uid ||
-
-            !player4Name ||
-            !player4Ign ||
-            !player4Uid
+            !cleanPlayerName ||
+            !cleanPlayerIgn ||
+            !cleanPlayerUid ||
+            !cleanMobile
         ) {
 
             return res.status(400).json({
+
                 success: false,
-                message: "Please fill all required fields."
+
+                message:
+                    "Please fill all required fields."
+
             });
 
         }
 
 
-        // =========================
-        // MOBILE VALIDATION
-        // EXACTLY 10 NUMBERS
-        // =========================
+        /* =============================================
+           NAME VALIDATION
+        ============================================= */
 
-        if (!/^[0-9]{10}$/.test(String(captainMobile))) {
+        if (cleanPlayerName.length < 2) {
 
             return res.status(400).json({
+
                 success: false,
-                message: "Captain mobile number must contain exactly 10 digits."
+
+                message:
+                    "Player name must contain at least 2 characters."
+
             });
 
         }
 
 
-        // =========================
-        // UID VALIDATION
-        // 1 TO 15 DIGITS
-        // =========================
+        /* =============================================
+           IGN VALIDATION
+        ============================================= */
 
-        const playerUIDs = [
-            player1Uid,
-            player2Uid,
-            player3Uid,
-            player4Uid
-        ];
-
-        for (let i = 0; i < playerUIDs.length; i++) {
-
-            if (!/^[0-9]{1,15}$/.test(String(playerUIDs[i]))) {
-
-                return res.status(400).json({
-                    success: false,
-                    message: `Player ${i + 1} UID must contain 1 to 15 digits only.`
-                });
-
-            }
-
-        }
-
-
-        // =========================
-        // DUPLICATE UID CHECK
-        // SAME TEAM
-        // =========================
-
-        const uniqueUIDs = new Set(
-            playerUIDs.map(uid => String(uid))
-        );
-
-        if (uniqueUIDs.size !== playerUIDs.length) {
+        if (cleanPlayerIgn.length < 2) {
 
             return res.status(400).json({
+
                 success: false,
-                message: "Player UIDs must be different."
+
+                message:
+                    "Free Fire IGN must contain at least 2 characters."
+
             });
 
         }
 
 
-        // =========================
-        // REGISTRATION ID
-        // =========================
+        /* =============================================
+           MOBILE VALIDATION
+        ============================================= */
 
-        const registrationId =
-            "MKX-" +
-            crypto.randomBytes(4).toString("hex").toUpperCase();
+        if (!/^[0-9]{10}$/.test(cleanMobile)) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Mobile number must contain exactly 10 digits."
+
+            });
+
+        }
 
 
-        // =========================
-        // INSERT REGISTRATION
-        // =========================
+        /* =============================================
+           UID VALIDATION
+        ============================================= */
+
+        if (!/^[0-9]{1,15}$/.test(cleanPlayerUid)) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Free Fire UID must contain 1 to 15 digits."
+
+            });
+
+        }
+
+
+        /* =============================================
+           EMAIL VALIDATION
+           Only validate when provided
+        ============================================= */
+
+        if (
+            cleanEmail &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)
+        ) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Please enter a valid email address."
+
+            });
+
+        }
+
+
+        /* =============================================
+           CHECK AVAILABLE SEATS
+        ============================================= */
+
+        const seatCount = db
+            .prepare(`
+                SELECT COUNT(*) AS total
+                FROM registrations
+                WHERE tournament_id = ?
+                AND status != 'Rejected'
+            `)
+            .get(TOURNAMENT_ID);
+
+
+        if (seatCount.total >= MAX_SEATS) {
+
+            return res.status(409).json({
+
+                success: false,
+
+                message:
+                    "All 48 tournament seats are already filled."
+
+            });
+
+        }
+
+
+        /* =============================================
+           DUPLICATE UID CHECK
+        ============================================= */
+
+        const existingUID = db
+            .prepare(`
+                SELECT registration_id
+                FROM registrations
+                WHERE tournament_id = ?
+                AND player_uid = ?
+                LIMIT 1
+            `)
+            .get(
+                TOURNAMENT_ID,
+                cleanPlayerUid
+            );
+
+
+        if (existingUID) {
+
+            return res.status(409).json({
+
+                success: false,
+
+                message:
+                    "This Free Fire UID is already registered."
+
+            });
+
+        }
+
+
+        /* =============================================
+           REGISTRATION ID
+        ============================================= */
+
+        let registrationId;
+
+        let exists = true;
+
+
+        while (exists) {
+
+            registrationId =
+                "MKX-" +
+                crypto
+                    .randomBytes(4)
+                    .toString("hex")
+                    .toUpperCase();
+
+
+            const check = db
+                .prepare(`
+                    SELECT id
+                    FROM registrations
+                    WHERE registration_id = ?
+                `)
+                .get(registrationId);
+
+
+            exists = !!check;
+
+        }
+
+
+        /* =============================================
+           INSERT
+        ============================================= */
 
         const insert = db.prepare(`
 
             INSERT INTO registrations (
 
                 registration_id,
-                team_name,
 
-                captain_name,
-                captain_mobile,
-                captain_email,
+                tournament_id,
 
-                player1_name,
-                player1_ign,
-                player1_uid,
+                player_name,
 
-                player2_name,
-                player2_ign,
-                player2_uid,
+                player_ign,
 
-                player3_name,
-                player3_ign,
-                player3_uid,
+                player_uid,
 
-                player4_name,
-                player4_ign,
-                player4_uid
+                mobile,
+
+                email,
+
+                status
 
             )
 
             VALUES (
 
                 @registration_id,
-                @team_name,
 
-                @captain_name,
-                @captain_mobile,
-                @captain_email,
+                @tournament_id,
 
-                @player1_name,
-                @player1_ign,
-                @player1_uid,
+                @player_name,
 
-                @player2_name,
-                @player2_ign,
-                @player2_uid,
+                @player_ign,
 
-                @player3_name,
-                @player3_ign,
-                @player3_uid,
+                @player_uid,
 
-                @player4_name,
-                @player4_ign,
-                @player4_uid
+                @mobile,
+
+                @email,
+
+                'Pending'
 
             )
 
@@ -234,327 +348,611 @@ app.post("/register", (req, res) => {
 
         insert.run({
 
-            registration_id: registrationId,
+            registration_id:
+                registrationId,
 
-            team_name: teamName.trim(),
+            tournament_id:
+                TOURNAMENT_ID,
 
-            captain_name: captainName.trim(),
-            captain_mobile: String(captainMobile),
-            captain_email: captainEmail
-                ? captainEmail.trim()
-                : null,
+            player_name:
+                cleanPlayerName,
 
-            player1_name: player1Name.trim(),
-            player1_ign: player1Ign.trim(),
-            player1_uid: String(player1Uid),
+            player_ign:
+                cleanPlayerIgn,
 
-            player2_name: player2Name.trim(),
-            player2_ign: player2Ign.trim(),
-            player2_uid: String(player2Uid),
+            player_uid:
+                cleanPlayerUid,
 
-            player3_name: player3Name.trim(),
-            player3_ign: player3Ign.trim(),
-            player3_uid: String(player3Uid),
+            mobile:
+                cleanMobile,
 
-            player4_name: player4Name.trim(),
-            player4_ign: player4Ign.trim(),
-            player4_uid: String(player4Uid)
+            email:
+                cleanEmail || null
+
         });
 
 
-        // =========================
-        // SUCCESS
-        // =========================
+        /* =============================================
+           SUCCESS
+        ============================================= */
 
-        res.json({
+        return res.json({
+
             success: true,
-            registrationId: registrationId
-        });
 
-    } catch (error) {
+            registrationId:
+                registrationId,
 
-        console.error(error);
+            message:
+                "Registration successful."
 
-        res.status(500).json({
-            success: false,
-            message: "Registration failed."
         });
 
     }
 
-});
 
+    /* =============================================
+       ERROR
+    ============================================= */
 
-// =========================
-// TRACK REGISTRATION
-// =========================
+    catch (error) {
 
-app.get("/track/:registrationId", (req, res) => {
-
-    try {
-
-        const registrationId =
-            req.params.registrationId;
-
-        const registration = db.prepare(`
-
-            SELECT
-                registration_id,
-                team_name,
-                captain_name,
-                created_at,
-                status
-
-            FROM registrations
-
-            WHERE registration_id = ?
-
-        `).get(registrationId);
-
-
-        if (!registration) {
-
-            return res.status(404).json({
-                success: false,
-                message: "Registration not found."
-            });
-
-        }
-
-
-        res.json({
-            success: true,
-            registration: registration
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Unable to find registration."
-        });
-
-    }
-
-});
-
-
-// =========================
-// ADMIN - ALL REGISTRATIONS
-// =========================
-
-app.get("/admin/registrations", (req, res) => {
-
-    try {
-
-        const registrations = db.prepare(`
-
-            SELECT
-                registration_id,
-                team_name,
-                captain_name,
-                captain_mobile,
-                captain_email,
-                status,
-                created_at
-
-            FROM registrations
-
-            ORDER BY id DESC
-
-        `).all();
-
-
-        res.json({
-            success: true,
-            registrations: registrations
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Unable to load registrations."
-        });
-
-    }
-
-});
-
-
-// =========================
-// ADMIN - FULL REGISTRATION DETAILS
-// =========================
-
-app.get("/admin/registration/:registrationId", (req, res) => {
-
-    try {
-
-        const registrationId =
-            req.params.registrationId;
-
-        const registration = db.prepare(`
-
-            SELECT *
-            FROM registrations
-            WHERE registration_id = ?
-
-        `).get(registrationId);
-
-
-        if (!registration) {
-
-            return res.status(404).json({
-                success: false,
-                message: "Registration not found."
-            });
-
-        }
-
-
-        res.json({
-            success: true,
-            registration: registration
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Unable to load registration details."
-        });
-
-    }
-
-});
-
-
-// =========================
-// UPDATE REGISTRATION STATUS
-// =========================
-
-app.post("/admin/registration/status", (req, res) => {
-
-    try {
-
-        const {
-            registrationId,
-            status
-        } = req.body;
-
-
-        const allowedStatuses = [
-            "Pending",
-            "Under Review",
-            "Approved",
-            "Rejected",
-            "Waitlisted"
-        ];
-
-
-        if (
-            !registrationId ||
-            !allowedStatuses.includes(status)
-        ) {
-
-            return res.status(400).json({
-                success: false,
-                message: "Invalid registration ID or status."
-            });
-
-        }
-
-
-        const result = db.prepare(`
-
-            UPDATE registrations
-
-            SET status = ?
-
-            WHERE registration_id = ?
-
-        `).run(
-            status,
-            registrationId
+        console.error(
+            "Registration Error:",
+            error
         );
 
 
-        if (result.changes === 0) {
+        return res.status(500).json({
 
-            return res.status(404).json({
-                success: false,
-                message: "Registration not found."
+            success: false,
+
+            message:
+                "Registration failed. Please try again."
+
+        });
+
+    }
+
+});
+
+
+/* =====================================================
+   TRACK REGISTRATION
+===================================================== */
+
+app.get(
+    "/track/:registrationId",
+    (req, res) => {
+
+        try {
+
+            const registrationId =
+                String(
+                    req.params.registrationId || ""
+                ).trim();
+
+
+            if (!registrationId) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Registration ID is required."
+
+                });
+
+            }
+
+
+            const registration =
+                db.prepare(`
+
+                    SELECT
+
+                        registration_id,
+
+                        player_name,
+
+                        player_ign,
+
+                        tournament_id,
+
+                        status,
+
+                        created_at
+
+                    FROM registrations
+
+                    WHERE registration_id = ?
+
+                `).get(registrationId);
+
+
+            if (!registration) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Registration not found."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                registration:
+                    registration
+
             });
 
         }
 
 
-        res.json({
-            success: true,
-            message: "Registration status updated successfully."
-        });
+        catch (error) {
 
-    } catch (error) {
+            console.error(
+                "Track Error:",
+                error
+            );
 
-        console.error(error);
 
-        res.status(500).json({
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to find registration."
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   GET AVAILABLE SEATS
+===================================================== */
+
+app.get(
+    "/tournament/GT-S01",
+    (req, res) => {
+
+        try {
+
+            const result =
+                db.prepare(`
+
+                    SELECT COUNT(*) AS total
+
+                    FROM registrations
+
+                    WHERE tournament_id = ?
+
+                    AND status != 'Rejected'
+
+                `).get(TOURNAMENT_ID);
+
+
+            const registered =
+                result.total;
+
+            const available =
+                Math.max(
+                    MAX_SEATS - registered,
+                    0
+                );
+
+
+            return res.json({
+
+                success: true,
+
+                tournament: {
+
+                    id:
+                        TOURNAMENT_ID,
+
+                    name:
+                        "GT TOURNAMENT — SEASON 01",
+
+                    game:
+                        "Free Fire",
+
+                    mode:
+                        "Solo",
+
+                    maxSeats:
+                        MAX_SEATS,
+
+                    registered:
+                        registered,
+
+                    available:
+                        available
+
+                }
+
+            });
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Tournament Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to load tournament information."
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ADMIN - ALL REGISTRATIONS
+===================================================== */
+
+app.get(
+    "/admin/registrations",
+    (req, res) => {
+
+        try {
+
+            const registrations =
+                db.prepare(`
+
+                    SELECT
+
+                        registration_id,
+
+                        player_name,
+
+                        player_ign,
+
+                        player_uid,
+
+                        mobile,
+
+                        email,
+
+                        status,
+
+                        created_at,
+
+                        updated_at
+
+                    FROM registrations
+
+                    WHERE tournament_id = ?
+
+                    ORDER BY id DESC
+
+                `).all(
+                    TOURNAMENT_ID
+                );
+
+
+            return res.json({
+
+                success: true,
+
+                registrations:
+                    registrations
+
+            });
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Admin Registration Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to load registrations."
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ADMIN - FULL REGISTRATION DETAILS
+===================================================== */
+
+app.get(
+    "/admin/registration/:registrationId",
+    (req, res) => {
+
+        try {
+
+            const registrationId =
+                String(
+                    req.params.registrationId || ""
+                ).trim();
+
+
+            const registration =
+                db.prepare(`
+
+                    SELECT *
+
+                    FROM registrations
+
+                    WHERE registration_id = ?
+
+                    AND tournament_id = ?
+
+                `).get(
+
+                    registrationId,
+
+                    TOURNAMENT_ID
+
+                );
+
+
+            if (!registration) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Registration not found."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                registration:
+                    registration
+
+            });
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Admin Details Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to load registration details."
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ADMIN - UPDATE STATUS
+===================================================== */
+
+app.post(
+    "/admin/registration/status",
+    (req, res) => {
+
+        try {
+
+            const {
+                registrationId,
+                status
+            } = req.body;
+
+
+            const allowedStatuses = [
+
+                "Pending",
+
+                "Under Review",
+
+                "Approved",
+
+                "Rejected",
+
+                "Waitlisted"
+
+            ];
+
+
+            if (
+                !registrationId ||
+                !allowedStatuses.includes(status)
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Invalid registration ID or status."
+
+                });
+
+            }
+
+
+            const result =
+                db.prepare(`
+
+                    UPDATE registrations
+
+                    SET
+
+                        status = ?,
+
+                        updated_at =
+                            CURRENT_TIMESTAMP
+
+                    WHERE registration_id = ?
+
+                    AND tournament_id = ?
+
+                `).run(
+
+                    status,
+
+                    registrationId,
+
+                    TOURNAMENT_ID
+
+                );
+
+
+            if (result.changes === 0) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Registration not found."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Registration status updated successfully."
+
+            });
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Status Update Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to update registration status."
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
+
+app.post(
+    "/admin/login",
+    (req, res) => {
+
+        const {
+            username,
+            password
+        } = req.body;
+
+
+        if (
+            ADMIN_USERNAME &&
+            ADMIN_PASSWORD &&
+            username === ADMIN_USERNAME &&
+            password === ADMIN_PASSWORD
+        ) {
+
+            return res.json({
+
+                success: true
+
+            });
+
+        }
+
+
+        return res.status(401).json({
+
             success: false,
-            message: "Unable to update registration status."
+
+            message:
+                "Invalid username or password."
+
         });
 
     }
-
-});
-
-
-// =========================
-// ADMIN LOGIN
-// =========================
-
-app.post("/admin/login", (req, res) => {
-
-    const {
-        username,
-        password
-    } = req.body;
+);
 
 
-    if (
-        username === ADMIN_USERNAME &&
-        password === ADMIN_PASSWORD
-    ) {
+/* =====================================================
+   START SERVER
+===================================================== */
 
-        res.json({
-            success: true
-        });
+app.listen(
+    PORT,
+    () => {
 
-    } else {
-
-        res.json({
-            success: false,
-            message: "Invalid username or password."
-        });
+        console.log(
+            `MKX ESPORTS server running on port ${PORT}`
+        );
 
     }
-
-});
-
-
-// =========================
-// START SERVER
-// =========================
-
-app.listen(PORT, () => {
-
-    console.log(
-        `MKX ESPORTS server running on port ${PORT}`
-    );
-
-});
+);
