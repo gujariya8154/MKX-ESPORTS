@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000;
 // IMPORTANT:
 // Aa credentials public GitHub ma mukva nahi.
 // Proper deployment pela environment variables use karishu.
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "mkxadmin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "MKX@Admin2026";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 // =========================
 // MIDDLEWARE
