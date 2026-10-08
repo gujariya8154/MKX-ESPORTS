@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Team Registration | MKX ESPORTS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        ⚡ MKX ESPORTS
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#tournaments">Tournaments</a>
+        <a href="index.html#rules">Rules</a>
+        <a href="track.html">Track Status</a>
+
+        <!-- ADMIN BUTTON -->
+        <a href="admin.html">Admin</a>
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="section">
+
+    <p class="tag">GT TOURNAMENT — SEASON 01</p>
+
+    <h2>Team Registration</h2>
+
+    <p class="description">
+        Register your squad for the upcoming MKX ESPORTS tournament.
+    </p>
+
+
+    <form class="registration-form" id="registrationForm">
+
+        <!-- ==================== TEAM ==================== -->
+
+        <h3>Team Details</h3>
+
+        <label for="teamName">
+            Team Name *
+        </label>
+
+        <input
+            type="text"
+            id="teamName"
+            name="teamName"
+            placeholder="Enter your team name"
+            required
+        >
+
+
+        <!-- ==================== CAPTAIN ==================== -->
+
+        <h3>Captain Details</h3>
+
+        <label for="captainName">
+            Captain Name *
+        </label>
+
+        <input
+            type="text"
+            id="captainName"
+            name="captainName"
+            placeholder="Enter captain name"
+            required
+        >
+
+
+        <!-- MOBILE -->
+
+        <label for="captainMobile">
+            Captain Mobile *
+        </label>
+
+        <input
+            type="text"
+            id="captainMobile"
+            name="captainMobile"
+            placeholder="Enter 10-digit mobile number"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            minlength="10"
+            maxlength="10"
+            autocomplete="tel"
+            required
+            oninput="cleanMobile(this)"
+        >
+
+        <small class="uid-help">
+            Mobile number must contain exactly 10 digits.
+        </small>
+
+
+        <!-- EMAIL -->
+
+        <label for="captainEmail">
+            Captain Email
+        </label>
+
+        <input
+            type="email"
+            id="captainEmail"
+            name="captainEmail"
+            placeholder="Enter email address"
+        >
+
+
+        <!-- ==================== PLAYER 1 ==================== -->
+
+        <h3>Player 1 — Captain</h3>
+
+        <label for="player1Name">
+            Real Name *
+        </label>
+
+        <input
+            type="text"
+            id="player1Name"
+            name="player1Name"
+            placeholder="Player real name"
+            required
+        >
+
+
+        <label for="player1Ign">
+            IGN *
+        </label>
+
+        <input
+            type="text"
+            id="player1Ign"
+            name="player1Ign"
+            placeholder="In-Game Name"
+            required
+        >
+
+
+        <label for="player1Uid">
+            UID *
+        </label>
+
+        <input
+            type="text"
+            id="player1Uid"
+            name="player1Uid"
+            placeholder="Enter Free Fire UID"
+            inputmode="numeric"
+            pattern="[0-9]{1,15}"
+            minlength="1"
+            maxlength="15"
+            autocomplete="off"
+            required
+            oninput="cleanUID(this)"
+        >
+
+        <small class="uid-help">
+            UID: 1 to 15 digits.
+        </small>
+
+
+        <!-- ==================== PLAYER 2 ==================== -->
+
+        <h3>Player 2</h3>
+
+        <label for="player2Name">
+            Real Name *
+        </label>
+
+        <input
+            type="text"
+            id="player2Name"
+            name="player2Name"
+            placeholder="Player real name"
+            required
+        >
+
+
+        <label for="player2Ign">
+            IGN *
+        </label>
+
+        <input
+            type="text"
+            id="player2Ign"
+            name="player2Ign"
+            placeholder="In-Game Name"
+            required
+        >
+
+
+        <label for="player2Uid">
+            UID *
+        </label>
+
+        <input
+            type="text"
+            id="player2Uid"
+            name="player2Uid"
+            placeholder="Enter Free Fire UID"
+            inputmode="numeric"
+            pattern="[0-9]{1,15}"
+            minlength="1"
+            maxlength="15"
+            autocomplete="off"
+            required
+            oninput="cleanUID(this)"
+        >
+
+        <small class="uid-help">
+            UID: 1 to 15 digits.
+        </small>
+
+
+        <!-- ==================== PLAYER 3 ==================== -->
+
+        <h3>Player 3</h3>
+
+        <label for="player3Name">
+            Real Name *
+        </label>
+
+        <input
+            type="text"
+            id="player3Name"
+            name="player3Name"
+            placeholder="Player real name"
+            required
+        >
+
+
+        <label for="player3Ign">
+            IGN *
+        </label>
+
+        <input
+            type="text"
+            id="player3Ign"
+            name="player3Ign"
+            placeholder="In-Game Name"
+            required
+        >
+
+
+        <label for="player3Uid">
+            UID *
+        </label>
+
+        <input
+            type="text"
+            id="player3Uid"
+            name="player3Uid"
+            placeholder="Enter Free Fire UID"
+            inputmode="numeric"
+            pattern="[0-9]{1,15}"
+            minlength="1"
+            maxlength="15"
+            autocomplete="off"
+            required
+            oninput="cleanUID(this)"
+        >
+
+        <small class="uid-help">
+            UID: 1 to 15 digits.
+        </small>
+
+
+        <!-- ==================== PLAYER 4 ==================== -->
+
+        <h3>Player 4</h3>
+
+        <label for="player4Name">
+            Real Name *
+        </label>
+
+        <input
+            type="text"
+            id="player4Name"
+            name="player4Name"
+            placeholder="Player real name"
+            required
+        >
+
+
+        <label for="player4Ign">
+            IGN *
+        </label>
+
+        <input
+            type="text"
+            id="player4Ign"
+            name="player4Ign"
+            placeholder="In-Game Name"
+            required
+        >
+
+
+        <label for="player4Uid">
+            UID *
+        </label>
+
+        <input
+            type="text"
+            id="player4Uid"
+            name="player4Uid"
+            placeholder="Enter Free Fire UID"
+            inputmode="numeric"
+            pattern="[0-9]{1,15}"
+            minlength="1"
+            maxlength="15"
+            autocomplete="off"
+            required
+            oninput="cleanUID(this)"
+        >
+
+        <small class="uid-help">
+            UID: 1 to 15 digits.
+        </small>
+
+
+        <!-- ==================== AGREEMENT ==================== -->
+
+        <div class="agreement">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="agreement"
+                    required
+                >
+
+                <span>
+                    I confirm that the information provided is correct
+                    and I agree to follow MKX ESPORTS tournament rules.
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <!-- ==================== SUBMIT ==================== -->
+
+        <button
+            type="submit"
+            class="register-btn"
+        >
+            Submit Registration →
+        </button>
+
+    </form>
+
+</section>
+
+</main>
+
+
+<!-- ==================== FOOTER ==================== -->
+
+<footer>
+
+    <div class="logo">
+        ⚡ MKX ESPORTS
+    </div>
+
+    <p>
+        PLAY TO LEAVE A LEGACY.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#tournaments">
+            Tournaments
+        </a>
+
+        <a href="track.html">
+            Track Status
+        </a>
+
+        <a href="admin.html">
+            Admin
+        </a>
+
+    </div>
+
+    <small>
+        MKX ESPORTS • BUILT FOR FAIR PLAY.
+    </small>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+<!-- ==================== REGISTRATION SCRIPT ==================== -->
+
+<script>
+
+    /* ==================== UID ==================== */
+
+    function cleanUID(input) {
+
+        input.value = input.value
+            .replace(/[^0-9]/g, '')
+            .slice(0, 15);
+
+    }
+
+
+    /* ==================== MOBILE ==================== */
+
+    function cleanMobile(input) {
+
+        input.value = input.value
+            .replace(/[^0-9]/g, '')
+            .slice(0, 10);
+
+    }
+
+
+    /* ==================== FORM ==================== */
+
+    const form =
+        document.getElementById("registrationForm");
+
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        /* ==================== MOBILE VALIDATION ==================== */
+
+        const mobile =
+            document.getElementById("captainMobile").value.trim();
+
+
+        if (!/^[0-9]{10}$/.test(mobile)) {
+
+            alert(
+                "Captain mobile number must contain exactly 10 digits."
+            );
+
+            document
+                .getElementById("captainMobile")
+                .focus();
+
+            return;
+        }
+
+
+        /* ==================== UID VALIDATION ==================== */
+
+        const uidFields = [
+
+            document.getElementById("player1Uid"),
+
+            document.getElementById("player2Uid"),
+
+            document.getElementById("player3Uid"),
+
+            document.getElementById("player4Uid")
+
+        ];
+
+
+        for (let i = 0; i < uidFields.length; i++) {
+
+            const uid =
+                uidFields[i].value.trim();
+
+
+            if (!/^[0-9]{1,15}$/.test(uid)) {
+
+                alert(
+                    "Player " +
+                    (i + 1) +
+                    " UID must contain 1 to 15 digits."
+                );
+
+                uidFields[i].focus();
+
+                return;
+            }
+
+        }
+
+
+        /* ==================== FORM DATA ==================== */
+
+        const formData =
+            new FormData(form);
+
+        const data =
+            Object.fromEntries(formData.entries());
+
+
+        /* ==================== SERVER ==================== */
+
+        try {
+
+            const response =
+                await fetch("/register", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(data)
+
+                });
+
+
+            const result =
+                await response.json();
+
+
+            /* ==================== SUCCESS ==================== */
+
+            if (result.success) {
+
+                alert(
+                    "Registration Successful! ⚡\n\n" +
+                    "Registration ID: " +
+                    result.registrationId +
+                    "\n\n" +
+                    "Please save your Registration ID."
+                );
+
+
+                form.reset();
+
+
+                window.location.href =
+                    "track.html?id=" +
+                    encodeURIComponent(
+                        result.registrationId
+                    );
+
+            }
+
+
+            /* ==================== ERROR ==================== */
+
+            else {
+
+                alert(
+                    result.message ||
+                    "Registration failed. Please try again."
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Registration Error:",
+                error
+            );
+
+            alert(
+                "Server error.\n\n" +
+                "Please make sure the MKX ESPORTS server is running."
+            );
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+node_modules/
+mkx_esports.db
+.env
+.DS_Store

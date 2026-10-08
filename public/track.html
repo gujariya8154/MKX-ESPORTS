@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Registration | MKX ESPORTS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        ⚡ MKX ESPORTS
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#tournaments">Tournaments</a>
+        <a href="register.html">Register</a>
+        <a href="track.html">Track Status</a>
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="section">
+
+    <p class="tag">MKX ESPORTS</p>
+
+    <h2>Track Registration</h2>
+
+    <p class="description">
+        Enter your Registration ID to check your tournament registration status.
+    </p>
+
+
+    <div class="registration-form">
+
+        <h3>Registration ID</h3>
+
+        <label for="registrationId">
+            Registration ID *
+        </label>
+
+        <input
+            type="text"
+            id="registrationId"
+            placeholder="Example: MKX-12345678"
+            required
+        >
+
+        <button
+            type="button"
+            class="register-btn"
+            onclick="checkStatus()"
+        >
+            Check Status →
+        </button>
+
+    </div>
+
+
+    <div
+        id="result"
+        class="registration-form"
+        style="display: none;"
+    >
+
+        <h3>Registration Details</h3>
+
+        <p>
+            <strong>Registration ID:</strong>
+            <span id="resultId"></span>
+        </p>
+
+        <p>
+            <strong>Team Name:</strong>
+            <span id="resultTeam"></span>
+        </p>
+
+        <p>
+            <strong>Tournament:</strong>
+            GT TOURNAMENT — SEASON 01
+        </p>
+
+        <p>
+            <strong>Captain:</strong>
+            <span id="resultCaptain"></span>
+        </p>
+
+        <p>
+            <strong>Registration Date:</strong>
+            <span id="resultDate"></span>
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            <span id="resultStatus"></span>
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ⚡ MKX ESPORTS
+    </div>
+
+    <p>
+        PLAY TO LEAVE A LEGACY.
+    </p>
+
+    <small>
+         MKX ESPORTS • BUILT FOR FAIR PLAY.
+    </small>
+
+</footer>
+
+
+<script>
+
+async function checkStatus() {
+
+    const registrationId =
+        document.getElementById("registrationId").value.trim();
+
+    if (!registrationId) {
+
+        alert("Please enter your Registration ID.");
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "/track/" + encodeURIComponent(registrationId)
+        );
+
+        const data = await response.json();
+
+
+        if (!data.success) {
+
+            alert("Registration ID not found.");
+
+            document.getElementById("result").style.display = "none";
+
+            return;
+        }
+
+
+        document.getElementById("resultId").textContent =
+            data.registration.registration_id;
+
+        document.getElementById("resultTeam").textContent =
+            data.registration.team_name;
+
+        document.getElementById("resultCaptain").textContent =
+            data.registration.captain_name;
+
+        document.getElementById("resultDate").textContent =
+            data.registration.created_at;
+
+        document.getElementById("resultStatus").textContent =
+            data.registration.status;
+
+
+        document.getElementById("result").style.display = "block";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert("Server error. Please try again.");
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

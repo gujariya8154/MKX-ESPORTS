@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GT TOURNAMENT — SEASON 01 | MKX ESPORTS</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, #25200b 0%, transparent 35%),
+                #070a10;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            width: 100%;
+            background: rgba(8, 11, 18, 0.95);
+            border-bottom: 1px solid #252d3b;
+            padding: 17px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #e5a900;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #e5a900;
+        }
+
+        .admin-link {
+            border: 1px solid #e5a900;
+            padding: 8px 13px;
+            border-radius: 7px;
+            color: #e5a900 !important;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: 92%;
+            max-width: 1200px;
+            margin: 45px auto 30px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(229, 169, 0, 0.15),
+                    rgba(10, 14, 22, 0.95)
+                );
+            border: 1px solid #343b49;
+            border-radius: 18px;
+            padding: 55px 40px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e5a900;
+            color: #080b12;
+            font-weight: 900;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 62px);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #e5a900;
+        }
+
+        .hero p {
+            color: #aeb6c5;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* =========================
+           INFO GRID
+        ========================= */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-card {
+            background: #111722;
+            border: 1px solid #272f3e;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .info-card .icon {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .info-card small {
+            display: block;
+            color: #8f98a8;
+            margin-bottom: 7px;
+        }
+
+        .info-card strong {
+            font-size: 17px;
+        }
+
+        /* =========================
+           CONTENT GRID
+        ========================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+            margin-top: 25px;
+        }
+
+        .panel {
+            background: #111722;
+            border: 1px solid #272f3e;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        .panel h2 {
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        .panel h2 span {
+            color: #e5a900;
+        }
+
+        .panel p {
+            color: #aeb6c5;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           RULES
+        ========================= */
+
+        .rules {
+            list-style: none;
+        }
+
+        .rules li {
+            position: relative;
+            padding: 11px 0 11px 25px;
+            color: #c4cad5;
+            line-height: 1.5;
+            border-bottom: 1px solid #202735;
+        }
+
+        .rules li:last-child {
+            border-bottom: none;
+        }
+
+        .rules li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #e5a900;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SLOT BOX
+        ========================= */
+
+        .slot-box {
+            background: #0b0f17;
+            border: 1px solid #30394a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+
+        .slot-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .slot-top span {
+            color: #9da6b6;
+        }
+
+        .slot-top strong {
+            color: #e5a900;
+        }
+
+        .progress {
+            height: 9px;
+            background: #252c38;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #e5a900;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .register-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            background: #e5a900;
+            color: #080b12;
+            padding: 15px;
+            border-radius: 9px;
+            font-weight: 900;
+            margin-top: 18px;
+            transition: 0.2s;
+        }
+
+        .register-btn:hover {
+            background: #ffc21a;
+            transform: translateY(-2px);
+        }
+
+        .track-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #3b4454;
+            color: #ffffff;
+            padding: 14px;
+            border-radius: 9px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .track-btn:hover {
+            border-color: #e5a900;
+            color: #e5a900;
+        }
+
+        /* =========================
+           IMPORTANT INFO
+        ========================= */
+
+        .important {
+            border-left: 4px solid #e5a900;
+            background: #17150d;
+            padding: 15px;
+            border-radius: 6px;
+            color: #d4d7df;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #252d3b;
+            margin-top: 55px;
+            padding: 25px 5%;
+            text-align: center;
+            color: #747e90;
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: #e5a900;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            nav {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 40px 20px;
+                margin-top: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .info-card {
+                padding: 16px 10px;
+            }
+
+            .info-card strong {
+                font-size: 14px;
+            }
+
+            .panel {
+                padding: 19px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header>
+
+    <div class="logo">
+        MKX <span>ESPORTS</span>
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="tournament.html">
+            Tournament
+        </a>
+
+        <a href="register.html">
+            Register
+        </a>
+
+        <a href="track.html">
+            Track Status
+        </a>
+
+        <a href="admin.html" class="admin-link">
+            ADMIN
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="badge">
+        SEASON 01 • REGISTRATION OPEN
+    </div>
+
+    <h1>
+        GT TOURNAMENT
+        <span>— SEASON 01</span>
+    </h1>
+
+    <p>
+        A competitive Battle Royale squad tournament
+        presented by MKX ESPORTS.
+        Build your squad, compete with the best
+        and play to leave a legacy.
+    </p>
+
+</section>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         TOURNAMENT INFO
+    ========================= -->
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <div class="icon">🎮</div>
+
+            <small>Game</small>
+
+            <strong>
+                Free Fire
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="icon">⚔️</div>
+
+            <small>Mode</small>
+
+            <strong>
+                Battle Royale
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="icon">👥</div>
+
+            <small>Format</small>
+
+            <strong>
+                Squad • 4 Players
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="icon">🏆</div>
+
+            <small>Maximum Teams</small>
+
+            <strong>
+                12 Squads
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CONTENT
+    ========================= -->
+
+    <div class="content-grid">
+
+
+        <!-- LEFT -->
+
+        <div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Tournament <span>Overview</span>
+                </h2>
+
+                <p>
+                    GT TOURNAMENT — SEASON 01 is a
+                    competitive Free Fire Battle Royale
+                    squad tournament organized by
+                    MKX ESPORTS.
+                </p>
+
+                <br>
+
+                <p>
+                    Each registered squad consists of
+                    four players. Teams must register
+                    using their correct in-game details
+                    and follow all tournament rules.
+                </p>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Tournament <span>Rules</span>
+                </h2>
+
+                <ul class="rules">
+
+                    <li>
+                        BR Squad format — 4 players per team.
+                    </li>
+
+                    <li>
+                        Only registered players are allowed to play.
+                    </li>
+
+                    <li>
+                        Player changes require admin approval.
+                    </li>
+
+                    <li>
+                        Hacks, scripts, mods and cheats are strictly prohibited.
+                    </li>
+
+                    <li>
+                        Intentional glitches or exploits are not allowed.
+                    </li>
+
+                    <li>
+                        Teams must follow room joining instructions.
+                    </li>
+
+                    <li>
+                        Players must maintain respectful behaviour.
+                    </li>
+
+                    <li>
+                        Valid screenshot/video evidence may be required for disputes.
+                    </li>
+
+                    <li>
+                        Final decisions will be made by MKX ESPORTS Admin Team.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Important <span>Information</span>
+                </h2>
+
+                <div class="important">
+
+                    Registration details must be entered
+                    correctly. Your Registration ID will
+                    be generated after successful submission.
+                    Keep your Registration ID safe for
+                    checking your registration status.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Registration <span>Status</span>
+                </h2>
+
+
+                <div class="slot-box">
+
+                    <div class="slot-top">
+
+                        <span>
+                            Available Slots
+                        </span>
+
+                        <strong id="slotText">
+                            12 / 12
+                        </strong>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            id="progressBar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <p>
+                    Registration is currently open
+                    for eligible squads.
+                </p>
+
+
+                <a
+                    href="register.html"
+                    class="register-btn"
+                >
+                    REGISTER YOUR TEAM
+                </a>
+
+
+                <a
+                    href="track.html"
+                    class="track-btn"
+                >
+                    TRACK REGISTRATION
+                </a>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Tournament <span>Details</span>
+                </h2>
+
+                <div class="details">
+
+                    <p>
+                        <strong>Organizer:</strong>
+                        MKX ESPORTS
+                    </p>
+
+                    <br>
+
+                    <p>
+                        <strong>Game:</strong>
+                        Free Fire
+                    </p>
+
+                    <br>
+
+                    <p>
+                        <strong>Mode:</strong>
+                        Battle Royale
+                    </p>
+
+                    <br>
+
+                    <p>
+                        <strong>Team Size:</strong>
+                        4 Players
+                    </p>
+
+                    <br>
+
+                    <p>
+                        <strong>Maximum Teams:</strong>
+                        12
+                    </p>
+
+                    <br>
+
+                    <p>
+                        <strong>Tournament Status:</strong>
+                        <span style="color:#45e08c;">
+                            Registration Open
+                        </span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Play To Leave A <span>Legacy.</span>
+                </h2>
+
+                <p>
+                    Gather your squad.
+                    Enter the battlefield.
+                    Compete with confidence.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    
+    <strong>MKX ESPORTS ALL RIGHTS RESERVED.</strong>.
+    
+
+    <br><br>
+
+    PLAY TO LEAVE A LEGACY. ⚡
+
+</footer>
+
+
+<script>
+
+    /*
+        Current registration count is loaded
+        from the existing admin API.
+
+        Maximum teams = 12.
+    */
+
+    async function loadSlots() {
+
+        try {
+
+            const response =
+                await fetch("/admin/registrations");
+
+            const data =
+                await response.json();
+
+            if (!data.success) {
+                return;
+            }
+
+            const total =
+                data.registrations.length;
+
+            const maximum =
+                12;
+
+            const remaining =
+                Math.max(
+                    maximum - total,
+                    0
+                );
+
+            const percentage =
+                Math.min(
+                    (total / maximum) * 100,
+                    100
+                );
+
+
+            document.getElementById(
+                "slotText"
+            ).textContent =
+                remaining +
+                " / " +
+                maximum +
+                " available";
+
+
+            document.getElementById(
+                "progressBar"
+            ).style.width =
+                percentage + "%";
+
+
+        } catch (error) {
+
+            console.log(
+                "Unable to load slot data."
+            );
+
+        }
+
+    }
+
+
+    loadSlots();
+
+</script>
+
+</body>
+</html>
